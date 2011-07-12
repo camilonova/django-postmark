@@ -22,7 +22,7 @@ Or manually by downloading a tarball and typing::
     
 Once installed add `postmark` to your `INSTALLED_APPS` and run::
 
-    python manage.py syncdb
+    python manage.py migrate
     
 Django Configuration
 --------------------
