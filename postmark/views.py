@@ -51,7 +51,7 @@ def bounce(request):
             "Subject": null
         }
     """
-    if request.method in ["POST"]:
+    if request.method == "POST":
         if POSTMARK_API_USER is not None:
             if not request.META.has_key("HTTP_AUTHORIZATION"):
                 return HttpResponseForbidden()
@@ -68,9 +68,9 @@ def bounce(request):
             if not username_password == "%s:%s" % (POSTMARK_API_USER, POSTMARK_API_PASSWORD):
                 print "lol"
                 return HttpResponseForbidden()
-        
-        bounce_dict = json.loads(request.read())
-            
+
+        bounce_dict = json.loads(request.POST['body'])
+
         timestamp, tz = bounce_dict["BouncedAt"].rsplit("+", 1)
         tz_offset = int(tz.split(":", 1)[0])
         tz = timezone("Etc/GMT%s%d" % ("+" if tz_offset >= 0 else "-", tz_offset))
